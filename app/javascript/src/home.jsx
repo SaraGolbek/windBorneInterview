@@ -4,8 +4,28 @@ import ReactDOM from 'react-dom';
 import { safeCredentials, handleErrors } from './fetchHelper';
 import Layout from './layout';
 import TransmissionForm from './transmissionForm';
+import TransmissionsChart from './transmissionsChart';
+import TransmissionsMap from './transmissionsMap';
 
 const Home = () => {
+  const [transmissions, setTransmissions] = useState([]);
+
+  useEffect(() => {
+    getTransmissions();
+  }, []);
+
+  const getTransmissions = () => {
+    fetch('/api/transmissions', safeCredentials({
+      method: 'GET',
+    }))
+      .then(handleErrors)
+      .then(data => {
+        setTransmissions(data.transmissions);
+      })
+      .catch(error => {
+        console.error('Error fetching transmissions:', error);
+      });
+  };
 
   const handleFormSubmit = (transmissionData) => {
     fetch('/api/transmissions', safeCredentials({
@@ -15,6 +35,7 @@ const Home = () => {
       .then(handleErrors)
       .then(data => {
         getTransmissions();
+        console.log(data);
       })
       .catch(error => {
         console.error('Error submitting transmission:', error);
@@ -35,6 +56,18 @@ const Home = () => {
               <p style={{textIndent: "2em"}}>Please fill out the form to create a new transmission. In order to create a successful transmission you need to include an altitude, latitude, and longitude.</p>
             </div>
             <TransmissionForm onSubmit={handleFormSubmit} />
+          </div>
+
+          {/*---------- Graph ----------*/}
+
+          <div className="row">
+            <TransmissionsChart transmissions={transmissions} />
+          </div>
+
+          {/*----------  Map  ----------*/}
+
+          <div className="row">
+            <TransmissionsMap transmissions={transmissions} />
           </div>
         </div>
       </div>

@@ -6,7 +6,7 @@ const TransmissionForm = ({ onSubmit }) => {
   const [latitude, setLatitude] = useState('');
   const [longitude, setLongitude] = useState('');
 
-  const handleFormSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     onSubmit({ altitude, latitude, longitude });
     setAltitude('');
@@ -16,7 +16,7 @@ const TransmissionForm = ({ onSubmit }) => {
 
   return (
     <div className="col-7 mt-4">
-      <form id="transmissionInput" onSubmit={handleFormSubmit}>
+      <form id="transmissionInput" onSubmit={handleSubmit}>
         <div className="row mb-4">
           <div className="col-2">
             <label htmlFor="inputAltitude" className="col-form-label">Altitude</label>
@@ -53,3 +53,4 @@ const TransmissionForm = ({ onSubmit }) => {
 };
 
 export default TransmissionForm;
+
