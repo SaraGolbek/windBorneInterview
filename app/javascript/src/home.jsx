@@ -6,31 +6,10 @@ import Layout from './layout';
 import TransmissionForm from './transmissionForm';
 import TransmissionsChart from './transmissionsChart';
 import TransmissionsMap from './transmissionsMap';
-import consumer from '../channels/consumer.js';
+
 
 const Home = () => {
   const [transmissions, setTransmissions] = useState([]);
-
-  useEffect(() => {
-    const subscription = consumer.subscriptions.create("TransmissionsChannel", {
-      connected() {
-        // Called when the subscription is ready for use on the server
-      },
-
-      disconnected() {
-        // Called when the subscription has been terminated by the server
-      },
-
-      received(data) {
-        // Called when there's incoming data on the websocket for this channel
-        setTransmissions(prevTransmissions => [...prevTransmissions, data]);
-      }
-    });
-
-    return () => {
-      subscription.unsubscribe();
-    };
-  }, []);
 
   useEffect(() => {
     getTransmissions();
