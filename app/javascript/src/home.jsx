@@ -6,7 +6,7 @@ import Layout from './layout';
 import TransmissionForm from './transmissionForm';
 import TransmissionsChart from './transmissionsChart';
 import TransmissionsMap from './transmissionsMap';
-import consumer from './consumer';
+import consumer from '../channels/consumer.js';
 
 const Home = () => {
   const [transmissions, setTransmissions] = useState([]);
